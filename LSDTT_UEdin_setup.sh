@@ -39,10 +39,6 @@ if [ -d $LSD_DIR ]
 fi
 
 cd $HOME_DIR
-#echo -e "\n\n======================================="
-#echo "I am going to make a link from your home directory, which is here:"
-#pwd
-#echo "to the LSDTopoTools directory."
 # Make a symbolic link to that directory if it doesn't exist
 if [ -f $LINK_NAME ]
   then
@@ -62,9 +58,13 @@ echo "And these files are here: "
 ls 
 
 # Get rid of the annoying symbolic link that sometimes appears for no reason whatsoever
-if [ -f LSDTopoTools ]
+GETRID="LSDTopoTools"
+if [ -L $GETRID ]
   then
+    echo "Getrid!!"
     rm LSDTopoTools
+  else
+    echo "Where izzz it?"
 fi
 
 
