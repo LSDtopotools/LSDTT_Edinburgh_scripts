@@ -61,6 +61,12 @@ pwd
 echo "And these files are here: "
 ls 
 
+# Get rid of the annoying symbolic link that sometimes appears for no reason whatsoever
+if [ -f LSDTopoTools ]
+  then
+    rm LSDTopoTools
+fi
+
 
 # clone or pull the repo, depending on what is in there
 # check if the files have been cloned
