@@ -18,10 +18,10 @@ echo "2) Datashare directory (recommended for staff and research students). Type
 read -r -p "Do you want to install in your home directory (yes/no)? " input
 case $input in
     [yY][eE][sS]|[yY])
- echo "Yes"; T_DIR="/home/$uunvar"
+ echo "Yes"; T_DIR="/home/$uunvar"; ynvar="yes"
  ;;
     [nN][oO]|[nN])
- echo "No"; T_DIR="/exports/csce/datastore/geos/users/$uunvar"
+ echo "No"; T_DIR="/exports/csce/datastore/geos/users/$uunvar"; ynvar="no"
        ;;
     *)
  echo "Invalid input..."
@@ -59,6 +59,7 @@ fi
 
 cd $HOME_DIR
 # Make a symbolic link to that directory if it doesn't exist
+stryes="yes"
 if ["$ynvar"=="$stryes"]
   then
     if [ -f $LINK_NAME ]
@@ -133,15 +134,31 @@ fi
 
 # Grab the example data
 cd $DATA_DIR 
-if [ -d $EXAMPLE_DATA_DIR ]
+if [ "$ynvar" == "$stryes" ]
   then
-    echo "The example directory exists!"
+    if [ -d $EXAMPLE_DATA_DIR ]
+      then
+        echo "The example directory exists!"
+      else
+        echo "Let me get the example data for you."
+        echo "I am downloading the small version since you are on your home directory."
+        wget https://github.com/LSDtopotools/SmallExampleTopoDatasets/archive/master.zip
+        unzip master.zip
+        mv ./SmallExampleTopoDatasets-master ./ExampleTopoDatasets 
+        rm master.zip 
+    fi
   else
-    echo "Let me get the example data for you."
-    wget https://github.com/LSDtopotools/SmallExampleTopoDatasets/archive/master.zip
-    unzip master.zip
-    mv ./SmallExampleTopoDatasets-master ./ExampleTopoDatasets 
-    rm master.zip 
+    if [ -d $EXAMPLE_DATA_DIR ]
+      then
+        echo "The example directory exists!"
+      else
+        echo "Let me get the example data for you."
+        echo "I'm downloading the big version since you are on the datashare."
+        wget https://github.com/LSDtopotools/ExampleTopoDatasets/archive/master.zip
+        unzip master.zip
+        mv ./ExampleTopoDatasets-master ./ExampleTopoDatasets 
+        rm master.zip 
+    fi
 fi
 
 # Moving back to the LSDTT directory
