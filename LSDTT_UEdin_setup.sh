@@ -9,12 +9,31 @@ echo Can you please enter your university user name?
 echo If you get this wrong nothing will work so double check before you hit enter.
 
 read -p "University of Edinburgh User name (UUN): " uunvar
-
 echo Thanks $uunvar, I will now begin setting up LSDTopoTools
+
+# Let the user decide where they want to put their stuff
+echo "You can install LSDTopoTools in either your: "
+echo "1) Home directory (you must do this if you are an undergraduate or taught masters student). Type yes below."
+echo "2) Datashare directory (recommended for staff and research students). Type no below."
+read -r -p "Do you want to install in your home directory (yes/no)? " input
+case $input in
+    [yY][eE][sS]|[yY])
+ echo "Yes"; T_DIR="/home/$uunvar"
+ ;;
+    [nN][oO]|[nN])
+ echo "No"; T_DIR="/exports/csce/datastore/geos/users/$uunvar"
+       ;;
+    *)
+ echo "Invalid input..."
+ exit 1
+ ;;
+esac
+
+echo "The installation directory is: "
+echo $T_DIR
 
 # Set up some directory names
 HOME_DIR=$HOME
-T_DIR="/exports/csce/datastore/geos/users/$uunvar"
 LSD_DIR="$T_DIR/LSDTopoTools"
 SRC_DIR="$LSD_DIR/LSDTopoTools2/src/"
 WRK_DIR="$LSD_DIR/LSDTopoTools2"
@@ -40,13 +59,16 @@ fi
 
 cd $HOME_DIR
 # Make a symbolic link to that directory if it doesn't exist
-if [ -f $LINK_NAME ]
+if ["$ynvar"=="$stryes"]
   then
-    echo "You already have a symbolic link to the LSDTopoTools directory"
-  else
-    echo -e "\n\n======================================="
-    echo "I am going to make a symbolic link to the LSDTopoTools directory here."
-    ln -s /exports/csce/datastore/geos/users/$uunvar/LSDTopoTools $LINK_NAME
+    if [ -f $LINK_NAME ]
+      then
+        echo "You already have a symbolic link to the LSDTopoTools directory"
+      else
+        echo -e "\n\n======================================="
+        echo "I am going to make a symbolic link to the LSDTopoTools directory here."
+        ln -s /exports/csce/datastore/geos/users/$uunvar/LSDTopoTools $LINK_NAME
+  fi
 fi
 
 # Now go into the LSDTopoTools directory again
@@ -61,10 +83,10 @@ ls
 GETRID="LSDTopoTools"
 if [ -L $GETRID ]
   then
-    echo "Getrid!!"
+    echo "Getting rid of a stupid symbolic link that doesn't belong here!!"
     rm LSDTopoTools
   else
-    echo "Where izzz it?"
+    echo "Let me just carry on here. Don't worry about what I'm doing."
 fi
 
 
