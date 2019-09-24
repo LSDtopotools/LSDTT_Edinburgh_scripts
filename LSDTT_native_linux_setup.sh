@@ -116,6 +116,7 @@ if [ -d $DATA_DIR ]
 fi
 
 # Grab the example data
+cd $DATA_DIR
 if [ -d $EXAMPLE_DATA_DIR ]
   then
     echo "The example directory exists!"
