@@ -117,6 +117,8 @@ fi
 
 # Grab the example data
 cd $DATA_DIR
+echo "I am here:"
+ls
 if [ -d $EXAMPLE_DATA_DIR ]
   then
     echo "The example directory exists!"
