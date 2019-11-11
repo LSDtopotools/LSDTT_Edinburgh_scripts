@@ -66,15 +66,6 @@ pwd
 echo "And these files are here: "
 ls 
 
-# Get rid of the annoying symbolic link that sometimes appears for no reason whatsoever
-#GETRID="LSDTopoTools"
-#if [ -L $GETRID ]
-#  then
-#    echo "Getting rid of a stupid symbolic link that doesn't belong here!!"
-#    rm LSDTopoTools
-##  else
-#    echo "Let me just carry on here. Don't worry about what I'm doing."
-#fi
 
 
 # clone or pull the repo, depending on what is in there
@@ -84,7 +75,7 @@ echo Now let me either grab LSDTopoTools from the internet or check for updates
 if [ -f $SRC_DIR/LSDRaster.cpp ]
   then
     echo "The LSDTopoTools2 repository exists, updating to the latest version."
-    git --work-tree=$WRK_DIR --git-dir=$WRK_DIR.git  pull origin master
+    git --work-tree=$WRK_DIR --git-dir=$WRK_DIR/.git  pull origin master
   else
     echo "Cloning the LSDTopoTools2 repository"
     git clone https://github.com/LSDtopotools/LSDTopoTools2.git $WRK_DIR
