@@ -57,20 +57,6 @@ if [ -d $LSD_DIR ]
     mkdir $LSD_DIR
 fi
 
-cd $HOME_DIR
-# Make a symbolic link to that directory if it doesn't exist
-stryes="yes"
-if ["$ynvar"=="$stryes"]
-  then
-    if [ -f $LINK_NAME ]
-      then
-        echo "You already have a symbolic link to the LSDTopoTools directory"
-      else
-        echo -e "\n\n======================================="
-        echo "I am going to make a symbolic link to the LSDTopoTools directory here."
-        ln -s /exports/csce/datastore/geos/users/$uunvar/LSDTopoTools $LINK_NAME
-  fi
-fi
 
 # Now go into the LSDTopoTools directory again
 cd $LSD_DIR
@@ -81,14 +67,14 @@ echo "And these files are here: "
 ls 
 
 # Get rid of the annoying symbolic link that sometimes appears for no reason whatsoever
-GETRID="LSDTopoTools"
-if [ -L $GETRID ]
-  then
-    echo "Getting rid of a stupid symbolic link that doesn't belong here!!"
-    rm LSDTopoTools
-  else
-    echo "Let me just carry on here. Don't worry about what I'm doing."
-fi
+#GETRID="LSDTopoTools"
+#if [ -L $GETRID ]
+#  then
+#    echo "Getting rid of a stupid symbolic link that doesn't belong here!!"
+#    rm LSDTopoTools
+##  else
+#    echo "Let me just carry on here. Don't worry about what I'm doing."
+#fi
 
 
 # clone or pull the repo, depending on what is in there
